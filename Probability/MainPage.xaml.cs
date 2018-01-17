@@ -101,6 +101,8 @@ namespace Probability
                 probability_1.Text = (p / trial).ToString();
                 num_trial.Text = trial.ToString();
                 num_true.Text = check_true().ToString();
+                
+                res_field.ChangeView(0.0f, double.MaxValue, 1.0f);
             }
 
             probability_1.Text = (p / trial).ToString();
@@ -156,12 +158,13 @@ namespace Probability
                     p = p_l;
 
                     probability_1.Text = (p / trial).ToString();
-                    num_trial.Text = trial.ToString();                    
+                    num_trial.Text = trial.ToString();
                 }
 
                 probability_1.Text = (p / trial).ToString();
                 num_trial.Text = trial.ToString();
                 num_true.Text = check_true().ToString();
+                res_field.ChangeView(0.0f, double.MaxValue, 1.0f);
             }
         }
 
@@ -183,6 +186,22 @@ namespace Probability
         {
             int randomNumber = random.Next(min, max);
             return randomNumber;
+        }
+
+        private void r6(object sender, RoutedEventArgs e)
+        {
+            choice1.Visibility = Visibility.Collapsed;
+            choice.Visibility = Visibility.Visible;
+        }
+
+        private void t_c(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cust_options(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

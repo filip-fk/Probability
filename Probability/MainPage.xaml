@@ -7,19 +7,41 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Page.Resources>
+    <!--    <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Dictionary1.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </Page.Resources>
+    </Page.Resources>-->
 
     <Grid Background="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="choice1.Orientation"
+                                Value="Vertical" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="pc">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="700" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="choice1.Orientation"
+                                Value="Horizontal" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid BorderBrush="{ThemeResource SystemAccentColorDark2}" BorderThickness="0,0,0,2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -45,23 +67,28 @@
                             <TextBlock x:Name="num_trial" Text="0" Margin="5,0,0,0" Foreground="{ThemeResource SystemAccentColor}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Center">
-                            <TextBlock Text="Number of tries: " Foreground="{ThemeResource SystemAccentColor}"/>
+                            <TextBlock Text="Number of wanted value: " Foreground="{ThemeResource SystemAccentColor}"/>
                             <TextBlock x:Name="num_true" Text="0" Margin="5,0,0,0" Foreground="{ThemeResource SystemAccentColor}"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
             </StackPanel>
+            <StackPanel x:Name="choice1" Visibility="Visible" Margin="50" Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <RadioButton Content="Roll a six on a perfect dice" Margin="10,0" Checked="r6" HorizontalAlignment="Center"/>
+                <RadioButton Content="Toss a coin" Margin="10,0" Checked="t_c" HorizontalAlignment="Center"/>
+                <RadioButton Content="Custom" Margin="10,0" Checked="cust_options" HorizontalAlignment="Center"/>
+            </StackPanel>
             <StackPanel x:Name="choice" Visibility="Collapsed" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <RadioButton Content="Manual control" Checked="m_c"/>
                 <RadioButton Content="Stop at" Margin="0,10,0,0" Checked="s_a"/>
             </StackPanel>
-            <Button x:Name="back_btn" Visibility="Visible" Grid.Row="1" VerticalAlignment="Top" Margin="15" Click="show_choice">
+            <Button x:Name="back_btn" Visibility="Collapsed" Grid.Row="1" VerticalAlignment="Top" Margin="15" Click="show_choice">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xE72b;" FontFamily="segoe mdl2 assets" VerticalAlignment="Center"/>
                     <TextBlock Text="Show options" Margin="15,0,0,0" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <StackPanel x:Name="m_c_p" Visibility="Visible" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel x:Name="m_c_p" Visibility="Collapsed" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="start_btn" Grid.Row="1" VerticalAlignment="Top" Margin="15" Click="start_p">
                         <StackPanel Orientation="Horizontal">
@@ -84,7 +111,7 @@
                 </StackPanel>
                 <TextBlock Text="Speed:" Margin="20,15,0,0"/>
                 <StackPanel Orientation="Horizontal">
-                    <Slider Name="sldr" Width="290" Margin="15,5,15,5" Value="0" Maximum="200" IsDirectionReversed="False" Minimum="10"/>
+                    <Slider Name="sldr" Width="290" Margin="15,5,15,5" Value="0" Maximum="200" IsDirectionReversed="False" Minimum="5"/>
                     <TextBlock Text="{Binding Value, ElementName=sldr}" VerticalAlignment="Center"/>
                     <TextBlock Text=" ms" VerticalAlignment="Center"/>
                 </StackPanel>
@@ -94,7 +121,7 @@
             <StackPanel x:Name="s_a_p" Visibility="Collapsed" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="Stop at:" Grid.Row="1" VerticalAlignment="Center" Margin="15,15,0,15"/>
                 <TextBox x:Name="a_start_tbx" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,15,15,15"/>
-                <Button x:Name="a_start_btn" Grid.Row="1" VerticalAlignment="Top" Margin="15" Click="start_p_a">
+                <Button x:Name="a_start_btn" Style="{StaticResource ButtonRevealStyle}" Grid.Row="1" VerticalAlignment="Top" Margin="15" Click="start_p_a">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE768;" FontFamily="segoe mdl2 assets" VerticalAlignment="Center"/>
                         <TextBlock Text="Start" Margin="15,0,0,0" VerticalAlignment="Center"/>
@@ -109,7 +136,7 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
-            <ScrollViewer Margin="20">
+            <ScrollViewer x:Name="res_field" Margin="20">
                 <TextBlock x:Name="results" TextWrapping="WrapWholeWords"/>
             </ScrollViewer>
         </Grid>
